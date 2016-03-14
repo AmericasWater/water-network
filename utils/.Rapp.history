@@ -1,0 +1,2534 @@
+ggplot(data, aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(umms, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, label="Adult fish"), aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(umms, umegas)), ylim=c(uhr, 10 * uyear))
+subset(data, label="Adult fish")
+subset(data, label=="Adult fish")
+ggplot(subset(data, label=="Adult fish"), aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(umms, umegas)), ylim=c(uhr, 10 * uyear))
+data[1:4,]
+cilo
+cihi
+ii = 1
+yymin <- xx^2 * gamma.lo / cilo[ii]#
+    yymax <- xx^2 * gamma.hi / cihi[ii]#
+    yylo <- xx^2 * gamma.me / cilo[ii]#
+    yyhi <- xx^2 * gamma.me / cihi[ii]
+yymin
+yymax
+yylo
+yyhi
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater (fractured)", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+gamma.lo <- .005#
+gamma.me <- .05#
+gamma.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ymin=c(), ymax=c(), ylo=c(), yhi=c(), label=c())#
+for (ii in 1:length(labels)) {#
+    yymin <- xx^2 * gamma.lo / cilo[ii]#
+    yymax <- xx^2 * gamma.hi / cihi[ii]#
+    yylo <- xx^2 * gamma.me / cihi[ii]#
+    yyhi <- xx^2 * gamma.me / cilo[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- (cilo + cihi) / 2#
+data$label <- factor(data$label, labels[order(values)])#
+#
+ggplot(data, aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(umms, umegas)), ylim=c(uhr, 10 * uyear))
+ii = 1
+yymin <- xx^2 * gamma.lo / cilo[ii]#
+    yymax <- xx^2 * gamma.hi / cihi[ii]#
+    yylo <- xx^2 * gamma.me / cihi[ii]#
+    yyhi <- xx^2 * gamma.me / cilo[ii]
+yylo
+yyhi
+yymin
+yymax
+ggplot(data, aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(umms, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(data[1:4,], aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(umms, umegas)), ylim=c(uhr, 10 * uyear))
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater (fractured)", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+gamma.lo <- .005#
+gamma.me <- .05#
+gamma.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ymin=c(), ymax=c(), ylo=c(), yhi=c(), label=c())#
+for (ii in 1:length(labels)) {#
+    yymin <- xx^2 * gamma.lo / cihi[ii]#
+    yymax <- xx^2 * gamma.hi / cilo[ii]#
+    yylo <- xx^2 * gamma.me / cihi[ii]#
+    yyhi <- xx^2 * gamma.me / cilo[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- (cilo + cihi) / 2#
+data$label <- factor(data$label, labels[order(values)])#
+#
+ggplot(data, aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(umms, umegas)), ylim=c(uhr, 10 * uyear))
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater (fractured)", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+gamma.lo <- .005#
+gamma.me <- .05#
+gamma.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ymin=c(), ymax=c(), ylo=c(), yhi=c(), label=c())#
+for (ii in 1:length(labels)) {#
+    yymin <- xx^2 * gamma.lo / cihi[ii]#
+    yymax <- xx^2 * gamma.hi / cilo[ii]#
+    yylo <- xx^2 * gamma.me / cihi[ii]#
+    yyhi <- xx^2 * gamma.me / cilo[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- (cilo + cihi) / 2#
+data$label <- factor(data$label, labels[order(values)])#
+#
+ggplot(data, aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(umms, u40megas)), ylim=c(uhr, 10 * uyear))
+ggplot(data, aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(umms, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(umms, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(ums, umegas)), ylim=c(uhr, 10 * uyear))
+for (ii in 1:length(labels2)) {#
+    yymin <- xx * gamma.lo / cihi2[ii]#
+    yymax <- xx * gamma.hi / cilo2[ii]#
+    yylo <- xx * gamma.me / cihi2[ii]#
+    yyhi <- xx * gamma.me / cilo2[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}
+labels2 <- c("Larval currents", "Africanized bees", "Forest migration")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, 0)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear)
+for (ii in 1:length(labels2)) {#
+    yymin <- xx * gamma.lo / cihi2[ii]#
+    yymax <- xx * gamma.hi / cilo2[ii]#
+    yylo <- xx * gamma.me / cihi2[ii]#
+    yyhi <- xx * gamma.me / cilo2[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}
+data
+library(ggplot2)#
+library(scales)#
+#
+values <- (cilo + cihi) / 2#
+data$label <- factor(data$label, labels[order(values)])#
+#
+ggplot(subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(ums, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(data[33:44,], aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(ums, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(data[33:44,], aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades"))
+data[33:44,]
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater (fractured)", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents", "Africanized bees", "Forest migration")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear)#
+#
+gamma.lo <- .005#
+gamma.me <- .05#
+gamma.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ymin=c(), ymax=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yymin <- xx^2 * gamma.lo / cihi[ii]#
+    yymax <- xx^2 * gamma.hi / cilo[ii]#
+    yylo <- xx^2 * gamma.me / cihi[ii]#
+    yyhi <- xx^2 * gamma.me / cilo[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yymin <- xx * gamma.lo / cihi2[ii]#
+    yymax <- xx * gamma.hi / cilo2[ii]#
+    yylo <- xx * gamma.me / cihi2[ii]#
+    yyhi <- xx * gamma.me / cilo2[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- (cilo + cihi) / 2#
+data$label <- factor(data$label, labels[order(values)])#
+#
+subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)")))#
+ggplot(data[33:44,], aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(ums, umegas)), ylim=c(uhr, 10 * uyear))
+data[33:44,]
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater (fractured)", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents", "Africanized bees", "Forest migration")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear)#
+#
+gamma.lo <- .005#
+gamma.me <- .05#
+gamma.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ymin=c(), ymax=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yymin <- xx^2 * gamma.lo / cihi[ii]#
+    yymax <- xx^2 * gamma.hi / cilo[ii]#
+    yylo <- xx^2 * gamma.me / cihi[ii]#
+    yyhi <- xx^2 * gamma.me / cilo[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yymin <- xx * gamma.lo / cihi2[ii]#
+    yymax <- xx * gamma.hi / cilo2[ii]#
+    yylo <- xx * gamma.me / cihi2[ii]#
+    yyhi <- xx * gamma.me / cilo2[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}
+data
+values <- c((cilo + cihi) / 2, (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])
+ggplot(data[33:44,], aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(ums, umegas)), ylim=c(uhr, 10 * uyear))
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater (fractured)", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents", "Africanized bees", "Forest migration")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear)#
+#
+gamma.lo <- .005#
+gamma.me <- .05#
+gamma.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ymin=c(), ymax=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yymin <- xx^2 * gamma.lo / cihi[ii]#
+    yymax <- xx^2 * gamma.hi / cilo[ii]#
+    yylo <- xx^2 * gamma.me / cihi[ii]#
+    yyhi <- xx^2 * gamma.me / cilo[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yymin <- xx * gamma.lo / cihi2[ii]#
+    yymax <- xx * gamma.hi / cilo2[ii]#
+    yylo <- xx * gamma.me / cihi2[ii]#
+    yyhi <- xx * gamma.me / cilo2[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax)) +#
+    geom_ribbon(alpha=.5, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(ums, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.2, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(ums, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.2, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(ydays, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.2, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(yday, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.2, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, umegas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.2, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.5, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.7, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+values <- c((cilo + cihi) / 2, 5 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+values <- c((cilo + cihi) / 2, 100 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+values <- c((cilo + cihi) / 2, 1000 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+values <- c((cilo + cihi) / 2, 10000 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear))
+min(cilo)
+c(labels, labels2)[order(values)]
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear)) +#
+    xlab("")
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater (fractured)", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear)#
+#
+gamma.lo <- .005#
+gamma.me <- .05#
+gamma.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ymin=c(), ymax=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yymin <- xx^2 * gamma.lo / cihi[ii]#
+    yymax <- xx^2 * gamma.hi / cilo[ii]#
+    yylo <- xx^2 * gamma.me / cihi[ii]#
+    yyhi <- xx^2 * gamma.me / cilo[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yymin <- xx * gamma.lo / cihi2[ii]#
+    yymax <- xx * gamma.hi / cilo2[ii]#
+    yylo <- xx * gamma.me / cihi2[ii]#
+    yyhi <- xx * gamma.me / cilo2[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 5 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear)) +#
+    xlab("")
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(uday, u40megas)), ylim=c(uhr, 10 * uyear)) +#
+    xlab("")
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(uday, 10 * uyear)) +#
+    xlab("")
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater (fractured)", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+gamma.lo <- .005#
+gamma.me <- .05#
+gamma.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ymin=c(), ymax=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yymin <- xx^2 * gamma.lo / cihi[ii]#
+    yymax <- xx^2 * gamma.hi / cilo[ii]#
+    yylo <- xx^2 * gamma.me / cihi[ii]#
+    yyhi <- xx^2 * gamma.me / cilo[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yymin <- xx * gamma.lo / cihi2[ii]#
+    yymax <- xx * gamma.hi / cilo2[ii]#
+    yylo <- xx * gamma.me / cihi2[ii]#
+    yyhi <- xx * gamma.me / cilo2[ii]#
+#
+    data <- rbind(data, data.frame(x=xx, ymin=yymin, ymax=yymax, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.1, aes(fill=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10(breaks=c(uhr, uday, umonth, uyear, 10 * uyear),#
+                  labels=c("seconds", "days", "months", "years", "decades")) +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(uday, 10 * uyear)) +#
+    xlab("")
+1 / .005
+2 / 3^2
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater (fractured)", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+gamma.lo <- .005#
+gamma.me <- .05#
+gamma.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}
+data
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("")
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("")
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+gamma.lo <- .005#
+gamma.me <- .05#
+gamma.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("")
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(alpha=.6, aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("")
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("")
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("") + ylab(expression(gamma))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, ymin=ymin, ymax=ymax, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.1, yend=.1), arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=10*sqrt(ums), xend=sqrt(ums), y=.01, yend=.01), arrow=arrow(length=unit(0.03, "npc")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.1, yend=.1), arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=10*sqrt(ums), xend=sqrt(ums), y=.01, yend=.01), arrow=arrow(length=unit(0.03, "npc")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.1, yend=.1), arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=10*sqrt(ums), y=.01, yend=.01), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(label="Stationary", x=10*sqrt(umegas), y=.1) +#
+    geom_text(label="Well-mixed", x=100*sqrt(ums), y=.01)
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.1, yend=.1), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=10*sqrt(ums), y=.01, yend=.01), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.1)) +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.01))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.1, yend=.1), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.01, yend=.01), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", colour="#000000", x=10*sqrt(umegas), y=.13)) +#
+    geom_text(aes(label="Well-mixed", colour="#000000", x=100*sqrt(ums), y=.013))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.1, yend=.1), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.01, yend=.01), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.11), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.011), colour="#000000")
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.21), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.021), colour="#000000")
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.022), colour="#000000")
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000")
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression("Some values of", gamma, "across spatial scales"))
+?expression
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(paste(expression("Some values of", gamma, "across spatial scales")))
+paste("ok" "ko")
+paste("ok", "ko")
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of", gamma, "across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(gamma.lo, gamma.hi)) +#
+    xlab("Spatial scale") + ylab(expression(gamma)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", gamma, " across spatial scales")))
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+library(PBSmapping)
+polys = importShapefile("~/Downloads/tl_2015_05015_edges/tl_2015_05015_edges.shp")
+plotMap(polys)
+names(polys)
+polys[1:10,]
+plot(polys$X[1:4], polys$Y[1:4])
+plot(polys$X[1:4], polys$Y[1:4], type='l')
+names(attributes(polys))
+polydata = attr(polys, "PolyData")
+head(polydata)
+plotMap(polys[polys$PID %in% polydata$PID[polydata$MTFCC == "L4020"],])
+polydata[polydata$MTFCC == "L4020",]
+plotMap(polys)
+plotMap(polys[polys$PID %in% polydata$PID[polydata$MTFCC == "L4020"],], col=2)
+plotMap(polys)
+plotMap(polys[polys$PID %in% polydata$PID[polydata$MTFCC == "L4020"],], col=2, add=T)
+plotMap(polys)
+addPolys(polys[polys$PID %in% polydata$PID[polydata$MTFCC == "L4020"],], col=2)
+addPolys(polys[polys$PID %in% polydata$PID[polydata$MTFCC == "L4020"],], col=3)
+addPolys(polys[polys$PID %in% polydata$PID[polydata$MTFCC == "L4020"],], col=2)
+plotMap(polys[polys$PID %in% polydata$PID[polydata$MTFCC == "L4020"],], col=2)
+plotMap(polys)
+plotMap(polys[polys$PID %in% polydata$PID[polydata$MTFCC == "L4020"],], border=2)
+plotMap(polys)
+addPolys(polys[polys$PID %in% polydata$PID[polydata$MTFCC == "L4020"],], border=2)
+?PBSmapping
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uday <- 1#
+uyear <- uday * 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])
+data
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(data, aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+uweek <- uday * 7#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols (air)", "CO2 (air)", "Canadian Lobster", "Maine Cod")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec, 13 * ukms / uweek, .69 * ukms / uday)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec, 13 * ukms / uweek, 51.7 * ukms / uday) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Aerosols (air)", "Nitrogen (water)", "Forest migration*"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+labels3 <- c("Canadian Lobster", "Maine Cod (low)", "Maine Cod (high)")#
+vals3 <- c(13 * ukms / uweek, .69 * ukms / uday, 51.7 * ukms / uday)
+data3 <- data.frame(x=c(), y=c(), label=c())#
+for (ii in 1:length(labels3)) {#
+    yy <- vals3[ii] / xx#
+#
+    data3 <- rbind(data3, data.frame(x=xx, y=yy, label=labels3[ii]))#
+}
+?geom_line
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, colour=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+uweek <- uday * 7#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+labels3 <- c("Canadian Lobster", "Maine Cod (low)", "Maine Cod (high)")#
+vals3 <- c(13 * ukms / uweek, .69 * ukms / uday, 51.7 * ukms / uday)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+data3 <- data.frame(x=c(), y=c(), label=c())#
+for (ii in 1:length(labels3)) {#
+    yy <- vals3[ii] / xx#
+#
+    data3 <- rbind(data3, data.frame(x=xx, y=yy, label=labels3[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+#
+"Aerosols (air)"#
+#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, colour=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x, colour=label)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x)) +#
+    #geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+data3
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x)) +#
+    #geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x)) +#
+    #geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    #coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+vals3
+cilo
+vals3
+sqrt(vals3)
+13 * 52
+sqrt(vals3) / 1000
+c(10 * ukms / umonth, 500 * ukms / umonth)
+vals3
+vals3 > 10 * ukms / umonth
+vals3 < 10 * ukms / umonth
+678321429 / 1.2e+08
+vals3
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+uweek <- uday * 7#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+labels3 <- c("Canadian Lobster", "Maine Cod (low)", "Maine Cod (high)")#
+vals3 <- c(13 * ukms / uweek, .69 * ukms / uday, 51.7 * ukms / uday)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+data3 <- data.frame(x=c(), y=c(), label=c())#
+for (ii in 1:length(labels3)) {#
+    yy <- vals3[ii] / xx^2#
+#
+    data3 <- rbind(data3, data.frame(x=xx, y=yy, label=labels3[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+#
+"Aerosols (air)"#
+#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x)) +#
+    #geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    #coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+uweek <- uday * 7#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+labels3 <- c("Canadian Lobster", "Maine Cod (low)", "Maine Cod (high)")#
+vals3 <- c(13 * ukms / uweek, .69 * ukms / uday, 51.7 * ukms / uday)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+data3 <- data.frame(x=c(), y=c(), label=c())#
+for (ii in 1:length(labels3)) {#
+    yy <- vals3[ii] / xx^2#
+#
+    data3 <- rbind(data3, data.frame(x=xx, y=yy, label=labels3[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+#
+"Aerosols (air)"#
+#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+uweek <- uday * 7#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+labels3 <- c("Canadian Lobster", "Maine Cod (low)", "Maine Cod (high)")#
+vals3 <- c(13 * ukms / uweek, 3 * ukms / uday, 51.7 * ukms / uday)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+data3 <- data.frame(x=c(), y=c(), label=c())#
+for (ii in 1:length(labels3)) {#
+    yy <- vals3[ii] / xx^2#
+#
+    data3 <- rbind(data3, data.frame(x=xx, y=yy, label=labels3[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+#
+"Aerosols (air)"#
+#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Species:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+uweek <- uday * 7#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols (air)", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+codlo <- (4.01 + 4.2 + 4.6 + 3 + 0.80 + 0.69 + 4 + 6 + 0.21) / 12#
+codhi <- (17.8 + 33.6 + 36.6 + 9.0 + 21.5 + 16.3 + 30.2 + 27.2 + 5.4) / 12#
+#
+labels3 <- c("Canadian Lobster", "Maine Cod (low)", "Maine Cod (high)")#
+vals3 <- c(13 * ukms / uweek, codlo * ukms / uday, codhi * ukms / uday)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+data3 <- data.frame(x=c(), y=c(), label=c())#
+for (ii in 1:length(labels3)) {#
+    yy <- vals3[ii] / xx^2#
+#
+    data3 <- rbind(data3, data.frame(x=xx, y=yy, label=labels3[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+#
+"Aerosols (air)"#
+#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Species:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+uweek <- uday * 7#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+codlo <- (4.01 + 4.2 + 4.6 + 3 + 0.80 + 0.69 + 4 + 6 + 0.21) / 12#
+codhi <- (17.8 + 33.6 + 36.6 + 9.0 + 21.5 + 16.3 + 30.2 + 27.2 + 5.4) / 12#
+#
+labels3 <- c("Canadian Lobster", "Maine Cod (low)", "Maine Cod (high)")#
+vals3 <- c(13 * ukms / uweek, codlo * ukms / uday, codhi * ukms / uday)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+data3 <- data.frame(x=c(), y=c(), label=c())#
+for (ii in 1:length(labels3)) {#
+    yy <- vals3[ii] / xx^2#
+#
+    data3 <- rbind(data3, data.frame(x=xx, y=yy, label=labels3[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+#
+"Aerosols (air)"#
+#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Forest migration*", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Populations:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Populations:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Populations:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(100^2 * ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Populations:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.22), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Populations:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.23), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Populations:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.225), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+codhi
+vals3
+codhi * 1000^2 / 365
+ukms
+uday
+codhi * 1000^2 * 365
+(16.5 / (10^2)) * 365.25
+(16.5 / (100^2)) * 365.25
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+uweek <- uday * 7#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+codlo <- (4.01 + 4.2 + 4.6 + 3 + 0.80 + 0.69 + 4 + 6 + 0.21) / 12#
+codhi <- (17.8 + 33.6 + 36.6 + 9.0 + 21.5 + 16.3 + 30.2 + 27.2 + 5.4 + 51.7) / 13#
+#
+labels3 <- c("Canadian Lobster", "Maine Cod (low)", "Maine Cod (high)")#
+vals3 <- c(13 * ukms / uweek, codlo * ukms / uday, codhi * ukms / uday)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+data3 <- data.frame(x=c(), y=c(), label=c())#
+for (ii in 1:length(labels3)) {#
+    yy <- vals3[ii] / xx^2#
+#
+    data3 <- rbind(data3, data.frame(x=xx, y=yy, label=labels3[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Populations:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.225), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+codhi
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+uweek <- uday * 7#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+codlo <- (4.01 + 4.2 + 4.6 + 3 + 0.80 + 0.69 + 4 + 6 + 0.21) / 12#
+codhi <- (17.8 + 33.6 + 36.6 + 9.0 + 21.5 + 16.3 + 30.2 + 27.2 + 5.4) / 12#
+#
+labels3 <- c("Canadian Lobster", "Maine Cod (low)", "Maine Cod (high)")#
+vals3 <- c(13 * ukms / uweek, codlo * ukms / uday, codhi * ukms / uday)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+data3 <- data.frame(x=c(), y=c(), label=c())#
+for (ii in 1:length(labels3)) {#
+    yy <- vals3[ii] / xx^2#
+#
+    data3 <- rbind(data3, data.frame(x=xx, y=yy, label=labels3[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Populations:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.225), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+6e9 / .03
+sqrt(6e9 / .03)
+sqrt(6e9 / .03) / 1000
+sqrt(6e9 / .06) / 1000
+sqrt(6e9 / .05) / 1000
+vals4
+vals3
+sqrt(678321429 / .05)
+sqrt(678321429 / .05) / 1000
+5597 / 116.5
+sqrt(837335625 / .05)
+sqrt(837335625 / .05) / 1000
+codlo
+codhi
+6e9 / 129^2
+6e9 / (129*1000)^2
+837335625 / (129*1000)^2
+678321429 / (116*1000)^2
+837335625 / (120*1000)^2
+678321429 / (120*1000)^2
+setwd("~/projects/disfish/paper")#
+#
+ums <- 1#
+ukms <- ums * 1000^2#
+ucms <- ums * .01^2#
+umms <- ums * .001^2#
+umegas <- ums * (1e6)^2#
+u40megas <- ums * (40 * 1e7)^2#
+uyear <- 1#
+uday <- uyear / 365.25#
+uweek <- uday * 7#
+umonth <- uyear / 12#
+uhr <- uday / 24#
+usec <- uhr / 3600#
+#
+labels <- c("Adult fish", "Plankton", "Nitrogen (water)", "Groundwater (limestone)",#
+            "Groundwater", "Forest growth", "Aerosols", "CO2 (air)")#
+cilo <- c(10 * ukms / umonth, 500 * ukms / umonth, 1.88 * ucms / usec, 6.5e-7 * ums / usec,#
+          5e-2 * ums / usec, .0017 * ums / uyear, 1.399 * ums / usec, .151 * ucms / usec)#16 * umms / usec)#
+cihi <- c(100 * ukms / umonth, 1000 * ukms / umonth, 1.88 * ucms / usec, 8.6e-7 * ums / usec,#
+          11e-2 * ums / usec, .0033 * ums / uyear, 2.365 * ums / usec, .151 * ucms / usec) #16 * umms / usec)#
+#
+labels2 <- c("Larval currents*", "Africanized bees*", "Forest migration*", "Wind speed*")#
+cilo2 <- c(.088 / usec, 330e3 / uyear, .1 / uyear, 1.7 / usec)#
+cihi2 <- c(.102 / usec, 500e3 / uyear, 2 / uyear, 2.3 / usec)#
+#
+codlo <- (4.01 + 4.2 + 4.6 + 3 + 0.80 + 0.69 + 4 + 6 + 0.21) / 12#
+codhi <- (17.8 + 33.6 + 36.6 + 9.0 + 21.5 + 16.3 + 30.2 + 27.2 + 5.4) / 12#
+#
+labels3 <- c("American Lobster", "Maine Cod (low)", "Maine Cod (high)")#
+vals3 <- c(13 * ukms / uweek, codlo * ukms / uday, codhi * ukms / uday)#
+#
+alpha.lo <- .005#
+alpha.me <- .05#
+alpha.hi <- .5#
+#
+xx <- sqrt(c(umms, ums, ukms, u40megas))#
+#
+data <- data.frame(x=c(), ylo=c(), yhi=c(), label=c())#
+#
+for (ii in 1:length(labels)) {#
+    yylo <- cihi[ii] / xx^2#
+    yyhi <- cilo[ii] / xx^2#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels[ii]))#
+}#
+#
+for (ii in 1:length(labels2)) {#
+    yylo <- cihi2[ii] / xx#
+    yyhi <- cilo2[ii] / xx#
+#
+    data <- rbind(data, data.frame(x=xx, ylo=yylo, yhi=yyhi, label=labels2[ii]))#
+}#
+#
+data3 <- data.frame(x=c(), y=c(), label=c())#
+for (ii in 1:length(labels3)) {#
+    yy <- vals3[ii] / xx^2#
+#
+    data3 <- rbind(data3, data.frame(x=xx, y=yy, label=labels3[ii]))#
+}#
+#
+library(ggplot2)#
+library(scales)#
+#
+values <- c((cilo + cihi) / 2, 1e6 * (cilo2 + cihi2) / 2)#
+data$label <- factor(data$label, c(labels, labels2)[order(values)])#
+#
+ggplot(subset(data, !(label %in% c("Forest growth", "CO2 (air)", "Nitrogen (water)", "Groundwater (limestone)"))), aes(x=x)) +#
+    geom_ribbon(aes(ymin=ylo, ymax=yhi, fill=label, colour=label)) +#
+    geom_line(data=data3, aes(x=x, y=y, linetype=label)) +#
+    scale_fill_discrete(name="Resource:") +#
+    scale_colour_discrete(name="Resource:") +#
+    scale_linetype_discrete(name="Populations:") +#
+    scale_x_log10(breaks=sqrt(c(umms, ums, ukms, umegas, u40megas)),#
+                  labels=c("mm", "m", "km", "country", "global"), expand=c(0, 0)) +#
+    scale_y_log10() +#
+    coord_cartesian(xlim=sqrt(c(ums, u40megas)), ylim=c(alpha.lo, alpha.hi)) +#
+    xlab("Spatial scale") + ylab(expression(alpha)) +#
+    geom_segment(aes(x=10*sqrt(umegas), xend=sqrt(u40megas), y=.2, yend=.2), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_segment(aes(x=100*sqrt(ums), xend=3*sqrt(ums), y=.02, yend=.02), colour="#000000", arrow=arrow(length=unit(0.03, "npc"))) +#
+    geom_text(aes(label="Stationary", x=10*sqrt(umegas), y=.225), colour="#000000") +#
+    geom_text(aes(label="Well-mixed", x=100*sqrt(ums), y=.018), colour="#000000") +#
+    ggtitle(expression(paste("Some values of ", alpha, " across spatial scales")))
+678321429 / (120*1000)^2
+5597 / 120
+2.3 * 365.25
+2.3 * 365.25 / (10^2)
+2.3 * 365.25 / (100^2)
+2.3 * 365.25 / (20^2)
+2.3 * 365.25 / (120^2)
+2.3 * 365.25 / (125^2)
+2.3 * 365.25 / (129^2)
+2.3 * 365.25 / (130^2)
+13 * 365.25 / (130^2)
+13 * 365.25 / (120^2)
+13 * 365.25 / (100^2)
+13 * 365.25 / (90^2)
+13 * 365.25 / (95^2)
+13 * 365.25 / (100^2)
+(13 * 365.25 / 7) / (100^2)
+(13 * 365.25 / 7) / (80^2)
+(13 * 365.25 / 7) / (120^2)
+(13 * 365.25 / 7) / (130^2)
+(13 * 365.25 / 7) / (110^2)
+(13 * 365.25 / 7) / (115^2)
+5597 / 115
+5597 / 50
+(13 * 365.25 / 7) / (112^2)
+library(RColorBrewer)#
+library(classInt)
+?classIntervals
+library(foreign)
+load.dta("~/Downloads/france_decadal_coeffs.dta")
+?foreign
+read.dta("~/Downloads/france_decadal_coeffs.dta")
+library(foreign)
+read.dta("~/Downloads/france_decadal_coeffs.dta")
+setwd("~/projects/water/model/waternet/utils")
+load("../data/waternet.RData")
+ls()
+stations[1,]
+network[1,]
+load("../../../network3/demand/countydraws.RData")
+ls()
+draws[1,]
+head(draws)
+?save
+setwd("~/projects/water/model/waternet/utils")#
+#
+## Make a network that looks like Y,#
+## Stations are order from top to bottom, and within each horizontal row, left to right.#
+## Counties are organized with borders like the letter W, ignoring the potential region on the left#
+#
+stations <- data.frame(collection=rep("dummy", 5), colid=1:5, area=c(1, 1, 2, 1, 3), lat=c(1, 1, 0, 0, -1), lon=c(0, 1, 0, 1, 0))#
+#
+network <- data.frame(collection=stations$collection, colid=stations$colid, lat=stations$lat, lon=stations$lon, elev=stations$elev, nextpt=c(3, 3, 4, 4, NA), dist=rep(1, 5))#
+#
+draws <- data.frame(fips=c(1, 2, 3, 3, 4), source=c(1, 2, 3, 5, 4), justif=rep("contains", 5), downhill=F, exdist=0)
+data.frame(collection=stations$collection, colid=stations$colid, lat=stations$lat, lon=stations$lon)
+stations$elev
+stations[1,]
+load("../../../network3/demand/countydraws.RData")
+stations[1,]
+load("../../../network3/waternet.RData")
+stations[1,]
+stations <- data.frame(collection=rep("dummy", 5), colid=1:5, area=c(1, 1, 2, 1, 3), lat=c(1, 1, 0, 0, -1), lon=c(0, 1, 0, 1, 0), elev=c(2, 2, 1, 2, 0))#
+#
+network <- data.frame(collection=stations$collection, colid=stations$colid, lat=stations$lat, lon=stations$lon, elev=stations$elev, nextpt=c(3, 3, 4, 4, NA), dist=rep(1, 5))#
+#
+draws <- data.frame(fips=c(1, 2, 3, 3, 4), source=c(1, 2, 3, 5, 4), justif=rep("contains", 5), downhill=F, exdist=0)#
+#
+save(stations, network, draws, file="../data/dummynet.RData")
+save(stations, network, file="../data/dummynet.RData")
+draws <- data.frame(fips=c(1, 2, 3, 3, 4), source=c(1, 2, 3, 5, 4), justif=rep("contains", 5), downhill=F, exdist=0)#
+#
+save(draws, file="../data/dummydraws.RData")
+xx = read.csv("~/Dropbox/WSC_CCNY/edds/countycalendars.csv")
+xx[1,]
+unique(xx$crop)
