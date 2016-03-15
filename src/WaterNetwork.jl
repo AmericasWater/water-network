@@ -24,13 +24,19 @@ function timestep(c::WaterNetwork, tt::Int)
     d = c.Dimensions
 
     for rr in d.gauges
-        gauge = m.indices_values[rr]
+        gg = vertex_index(downstreamorder[rr])
+        gauge = downstreamorder[rr].label
+        println("Process $gauge at $gg")
         allflow = 0.
-        for upstream in out_edges(wateridverts[gauge], waternet)
-            allflow += v.outflows[vertex_index(upstream), tt]
+        for upstream in out_neighbors(wateridverts[gauge], waternet)
+            println(upstream)
+            println(vertex_index(upstream, waternet))
+            println(v.outflows[vertex_index(upstream, waternet), tt])
+            allflow += v.outflows[vertex_index(upstream, waternet), tt]
+            println(allflow)
         end
-        v.inflows[rr, tt] = allflow
 
-        v.outflows[rr, tt] = allflow + added[rr, tt] - removed[rr, tt]
+        v.inflows[gg, tt] = allflow
+        v.outflows[gg, tt] = allflow + p.added[gg, tt] - p.removed[gg, tt]
     end
 end

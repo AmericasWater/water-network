@@ -84,11 +84,14 @@ else
     serialize(open("../data/waterdraws$suffix.jld", "w"), draws)
 end
 
+# Prepare the model
 downstreamorder = topological_sort_by_dfs(waternet)[end:-1:1];
 
-# Prepare the model
-
-numcounties = 3155
+if netset == "dummy"
+    numcounties = 5
+else
+    numcounties = 3155
+end
 numedges = num_edges(waternet)
 numsteps = 1 #86
 
@@ -98,7 +101,7 @@ function newmodel(ns)
     m = Model()
 
     setindex(m, :time, collect(2015:2015+numsteps-1))
-    setindex(m, :gauges, keys(wateridverts))
+    setindex(m, :gauges, collect(keys(wateridverts)))
 
     return m
 end
